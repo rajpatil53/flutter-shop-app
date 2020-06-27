@@ -44,30 +44,42 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  void _saveForm() async {
     var isValid = _form.currentState.validate();
     if (!isValid) {
       return;
     }
     _form.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct);
+      // Navigator.of(context).pop();
     } else {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .addProduct(_editedProduct)
-          .then((res) {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
-      }).catchError((err) {
+          .catchError((err) {
         print(err);
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occured!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  child: Text('Okay')),
+            ],
+          ),
+        );
       });
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
@@ -240,7 +252,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               if (val.isEmpty) return 'Please enter a URL.';
                               if (!val.startsWith('http'))
                                 return 'Please enter valid URL.';
-                              if (!val.endsWith('jpg') && !val.endsWith('png'))
+                              if (!val.endsWith('jpg') &&
+                                  !val.endsWith('png') &&
+                                  !val.endsWith('jpeg'))
                                 return 'Enter a image URL.';
                               return null;
                             },

@@ -6,10 +6,11 @@ import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
   final String id;
-  final Product product;
+  final String title;
+  final double price;
   final int quantity;
 
-  CartItem(this.id, this.product, this.quantity);
+  CartItem(this.id, this.title, this.price, this.quantity);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CartItem extends StatelessWidget {
         padding: EdgeInsets.only(right: 15),
       ),
       onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).deleteItem(product.id);
+        Provider.of<Cart>(context, listen: false).deleteItem(id);
       },
       confirmDismiss: (direction) {
         return showDialog(
@@ -63,7 +64,7 @@ class CartItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '₹${product.price}',
+                    '₹${price}',
                     style: TextStyle(
                         color: Theme.of(context).primaryTextTheme.title.color),
                   ),
@@ -71,8 +72,8 @@ class CartItem extends StatelessWidget {
               ),
               backgroundColor: Theme.of(context).primaryColor,
             ),
-            title: Text(product.title),
-            subtitle: Text('₹${(product.price * quantity)}'),
+            title: Text(title),
+            subtitle: Text('₹${(price * quantity)}'),
             trailing: Text('x $quantity'),
           ),
         ),
