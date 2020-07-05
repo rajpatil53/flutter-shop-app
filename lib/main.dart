@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/product.dart';
 import './providers/auth.dart';
 
 import './screens/splash_screen.dart';
@@ -47,7 +46,8 @@ class ShopApp extends StatelessWidget {
             primaryColor: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: "Lato",
-            textTheme: TextTheme(),
+            textTheme:
+                TextTheme(headline6: TextStyle(fontWeight: FontWeight.w700)),
           ),
           home: auth.isAuth
               ? ProductsOverviewScreen()

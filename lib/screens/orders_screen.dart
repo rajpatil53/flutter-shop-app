@@ -18,6 +18,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
+    super.initState();
     (() async {
       setState(() {
         _isLoading = true;

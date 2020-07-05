@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/product.dart';
 import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
@@ -64,9 +63,10 @@ class CartItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '₹${price}',
+                    '₹$price',
                     style: TextStyle(
-                        color: Theme.of(context).primaryTextTheme.title.color),
+                        color:
+                            Theme.of(context).primaryTextTheme.headline6.color),
                   ),
                 ),
               ),
