@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -38,10 +36,11 @@ class _OrderItemState extends State<OrderItem> {
               },
             ),
           ),
-          // if (_isExpanded)
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-            height: min(widget.orderItem.products.length * 30.0 + 10, 200),
+            height: _isExpanded ? widget.orderItem.products.length * 50.0 : 0,
             child: ListView(
               children: widget.orderItem.products
                   .map((item) => Padding(

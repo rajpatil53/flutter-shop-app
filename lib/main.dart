@@ -15,6 +15,8 @@ import './providers/products.dart';
 import './providers/cart.dart';
 import './providers/orders.dart';
 
+import './helpers/custom_route.dart';
+
 void main() => runApp(ShopApp());
 
 class ShopApp extends StatelessWidget {
@@ -48,7 +50,12 @@ class ShopApp extends StatelessWidget {
             fontFamily: "Lato",
             textTheme:
                 TextTheme(headline6: TextStyle(fontWeight: FontWeight.w700)),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CustomPageTransition(),
+              TargetPlatform.iOS: CustomPageTransition(),
+            }),
           ),
+          initialRoute: '/',
           home: auth.isAuth
               ? ProductsOverviewScreen()
               : FutureBuilder(

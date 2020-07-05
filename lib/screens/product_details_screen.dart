@@ -14,40 +14,49 @@ class ProductDetailsScreen extends StatelessWidget {
         Provider.of<Products>(context, listen: false).getById(productId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(selectedProduct.title),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 300,
-              width: double.infinity,
-              child: Image.network(
-                selectedProduct.imageUrl,
-                fit: BoxFit.cover,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(selectedProduct.title),
+              background: Hero(
+                tag: selectedProduct.id,
+                child: Image.network(
+                  selectedProduct.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              '₹${selectedProduct.price}',
-              style: TextStyle(color: Colors.blueGrey, fontSize: 24),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: Text(
-                selectedProduct.description,
-                style: TextStyle(fontSize: 16),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '₹${selectedProduct.price}',
+                    style: TextStyle(color: Colors.blueGrey, fontSize: 24),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      selectedProduct.description,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+            ]),
+          )
+        ],
       ),
     );
   }
